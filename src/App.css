@@ -1,3 +1,7 @@
+.text-decoration-line-through {
+  text-decoration: line-through;
+}
+
 * {
   font-family: 'Nunito', sans-serif;
 }

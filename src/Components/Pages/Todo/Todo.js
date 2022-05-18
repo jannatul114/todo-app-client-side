@@ -12,7 +12,7 @@ const Todo = () => {
 
     const email = user.email;
     useEffect(() => {
-        fetch(`http://localhost:5000/tasks?email=${email}`)
+        fetch(`https://infinite-scrubland-82298.herokuapp.com/tasks?email=${email}`)
             .then(res => res.json())
             .then(data => setTask(data))
     }, [tasks])
@@ -26,7 +26,7 @@ const Todo = () => {
         const description = event.target.description.value;
 
         const usersTask = { title: taskName, user: userEmail, description: description }
-        fetch(`http://localhost:5000/tasks`, {
+        fetch(`https://infinite-scrubland-82298.herokuapp.com/tasks`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify(usersTask)
@@ -41,7 +41,7 @@ const Todo = () => {
     const deleteTask = id => {
         const confirm = window.confirm('Are you sure?');
         if (confirm) {
-            const url = `http://localhost:5000/tasks/${id}`
+            const url = `https://infinite-scrubland-82298.herokuapp.com/tasks/${id}`
             fetch(url, {
                 method: 'DELETE'
             })
@@ -52,6 +52,16 @@ const Todo = () => {
                 })
         }
     }
+
+    const handleTextDecor = id => {
+        fetch(`https://infinite-scrubland-82298.herokuapp.com/tasks/${id}`, {
+            method: 'PUT',
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+    };
+
+
 
     return (
         <div>
@@ -79,19 +89,23 @@ const Todo = () => {
             >
                 <ul class="grid grid-cols-1  p-4 gap-5">
                     {
-                        tasks.length === 0 ? <h1 className='text-center text-purple-400 text-5xl'>No Tasks Yet</h1> : tasks.map(task => <li class="mx-auto flex justify-center rounded-xl ">
+                        tasks?.length === 0 ? <h1 className='text-center text-purple-400 text-5xl'>No Tasks Yet</h1> : tasks?.map(task => <li class="mx-auto flex justify-center rounded-xl ">
                             <div
                                 class="select-none flex justify-center p-5 transition duration-500 ease-in-out transform hover:-translate-y-2 rounded-2xl border-2 p-6 hover:shadow-2xl border-purple-400"
                             >
                                 <div>
                                     <div class=" pl-1 mr-16 text-center">
+
+
                                         <h1 className='text-4xl text-center'>{task?.title}</h1>
+
+
                                         <div class="font-medium text-center">
                                             {task?.description}
                                         </div>
                                     </div>
                                     <div className='flex justify-center mt-5'>
-                                        <button className='btn bg-purple-500 hover:bg-purple-600 rounded-none mr-3'>Compleate! 🙂</button>
+                                        <button onClick={() => handleTextDecor(task._id)} className='btn bg-purple-500 hover:bg-purple-600 rounded-none mr-3' >Compleate! 🙂</button>
                                         <button onClick={() => deleteTask(task?._id)} className='btn bg-purple-500 hover:bg-purple-600 rounded-none'><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                         </svg></button>
