@@ -1,7 +1,15 @@
+import { signOut } from 'firebase/auth';
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
+import auth from '../../../firebase.init';
 
 const Navbar = () => {
+    const [user, loading, error] = useAuthState(auth)
+
+    const handleSignOut = () => {
+        signOut(auth)
+    }
     return (
 
         <div className="navbar bg-base-100">
@@ -21,7 +29,17 @@ const Navbar = () => {
                 <ul className="menu menu-horizontal p-0">
 
                     <li> <Link to={'/todo'}>Todo</Link></li>
-                    <li><Link to={'/'}>Login</Link></li>
+                    {
+                        !user ? <button className=' mx-2'><Link to={'/'}>Login</Link></button> : <button onClick={handleSignOut} className=' mx-2 btn bg-purple-400 hover:bg-purple-500'>Signout</button>
+                    }
+                    <div className="avatar">
+                        <div className="w-12 rounded-full">
+                            {
+                                user && <img src={'https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg'} />
+                            }
+
+                        </div>
+                    </div>
                 </ul>
             </div>
 
