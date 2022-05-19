@@ -19,8 +19,9 @@ const Navbar = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                     </label>
                     <ul tabindex="0" className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                        <Link to={'/todo'}>Todo</Link>
-                        <Link to={'/'}>Login</Link>
+                        <li> <Link to={'/'}>Home</Link></li>
+                        <li> <Link to={'/todo'}>Todo</Link></li>
+                        <li> <Link to={'/login'}>Login</Link></li>
                     </ul>
                 </div>
                 <a className="btn btn-ghost normal-case text-xl">ToDo app</a>
@@ -28,9 +29,10 @@ const Navbar = () => {
             <div className="navbar-end hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
 
+                    <li> <Link to={'/'}>Home</Link></li>
                     <li> <Link to={'/todo'}>Todo</Link></li>
                     {
-                        !user ? <button className=' mx-2'><Link to={'/'}>Login</Link></button> : <button onClick={handleSignOut} className=' mx-2 btn bg-purple-400 hover:bg-purple-500'>Signout</button>
+                        !user ? <button className=' mx-2'><li><Link to={'/login'}>Login</Link></li></button> : <button onClick={handleSignOut} className=' mx-2 btn bg-purple-400 hover:bg-purple-500'>Signout</button>
                     }
                     <div className="avatar">
                         <div className="w-12 rounded-full">

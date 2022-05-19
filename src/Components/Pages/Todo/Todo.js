@@ -58,7 +58,14 @@ const Todo = () => {
             method: 'PUT',
         })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => {
+
+                console.log(data)
+                if (data?.acknowledged === true) {
+                    toast.success('Hurray!! task Successfully added')
+                }
+            })
+
     };
 
 
@@ -74,8 +81,8 @@ const Todo = () => {
                 <div>
                     <form onSubmit={AddTask}>
                         <div className=' my-4'>
-                            <input type="text" placeholder="Task title" name='task' class="input input-primary w-full max-w-xl rounded-none outline-none" required />
-                            <textarea name='description' class="textarea border-purple-500 border-2 w-full my-3 rounded-none" placeholder="Task description" required></textarea>
+                            <input type="text" placeholder="Task title" name='task' className="input input-primary w-full max-w-xl rounded-none outline-none" required />
+                            <textarea name='description' className="textarea border-purple-500 border-2 w-full my-3 rounded-none" placeholder="Task description" required></textarea>
                             <div className='flex justify-center'>
                                 <button type='submit' className='btn bg-purple-500 hover:bg-purple-600 rounded-none'>Add Task</button>
                             </div>
@@ -85,28 +92,29 @@ const Todo = () => {
                 </div>
             </div>
             <div
-                class="container mt-6 mb-2 flex mx-auto w-full items-center justify-center"
+                className="container mt-6 mb-2 flex mx-auto w-full items-center justify-center"
             >
-                <ul class="grid grid-cols-1  p-4 gap-5">
+                <ul className="grid grid-cols-1  p-4 gap-5">
                     {
-                        tasks?.length === 0 ? <h1 className='text-center text-purple-400 text-5xl'>No Tasks Yet</h1> : tasks?.map(task => <li class="mx-auto flex justify-center rounded-xl ">
+                        tasks?.length === 0 ? <h1 className='text-center text-purple-400 text-5xl'>No Tasks Yet</h1> : tasks?.map(task => <li className="mx-auto flex justify-center rounded-xl ">
                             <div
-                                class="select-none flex justify-center p-5 transition duration-500 ease-in-out transform hover:-translate-y-2 rounded-2xl border-2 p-6 hover:shadow-2xl border-purple-400"
+                                className="select-none flex justify-center p-5 transition duration-500 ease-in-out transform hover:-translate-y-2 rounded-2xl border-2 p-6 hover:shadow-2xl border-purple-400"
                             >
                                 <div>
-                                    <div class=" pl-1 mr-16 text-center">
+                                    <div className=" pl-1 mr-16 text-center">
 
 
-                                        <h1 className='text-4xl text-center'>{task?.title}</h1>
+                                        <h1 className={task?.complete === true ? 'text-4xl text-center text-decoration-line-through' : 'text-4xl text-center'}>{task?.title}</h1>
 
 
-                                        <div class="font-medium text-center">
-                                            {task?.description}
+                                        <div className="font-medium text-center ">
+                                            <p className={task?.complete === true ? ' text-center text-decoration-line-through' : ' text-center'}>{task?.description}</p>
+
                                         </div>
                                     </div>
                                     <div className='flex justify-center mt-5'>
                                         <button onClick={() => handleTextDecor(task._id)} className='btn bg-purple-500 hover:bg-purple-600 rounded-none mr-3' >Compleate! 🙂</button>
-                                        <button onClick={() => deleteTask(task?._id)} className='btn bg-purple-500 hover:bg-purple-600 rounded-none'><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <button onClick={() => deleteTask(task?._id)} className='btn bg-purple-500 hover:bg-purple-600 rounded-none'><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                         </svg></button>
                                     </div>
